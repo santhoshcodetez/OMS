@@ -4,30 +4,26 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class order extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-   // In order model
-static associate(models) {
-  order.hasMany(models.orderDetail, {
-    foreignKey: "orderId",  // Ensure this matches the column in the orderDetails table
-    as: "orderDetails"
-  });
-}
-
+    static associate(models) {
+      // Define the association between order and orderDetails
+      order.hasMany(models.orderDetail, {
+        foreignKey: 'orderId', // Foreign key in the orderDetail table
+        as: 'orderDetails'     // Alias for the association
+      });
+    }
   }
-  order.init({
-    orderDate: DataTypes.INTEGER,
-    totalAmount: DataTypes.INTEGER,
-    status: DataTypes.STRING,
-    paymentMethod: DataTypes.STRING,
-    discountApplied: DataTypes.INTEGER,
-    customerId: DataTypes.UUID
+
+  order.init({id: {
+    primaryKey: true,
+    type: DataTypes.UUID,
+    defaultValue:DataTypes.UUIDV4
+  },
+    orderDate: DataTypes.DATE,
+    totalAmount: DataTypes.DECIMAL
   }, {
     sequelize,
     modelName: 'order',
   });
+
   return order;
 };
