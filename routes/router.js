@@ -11,7 +11,7 @@ router.delete('/deleteCustomer',customerController.deleteCustomer)
 router.put('/updateCustomer',customerController.updateCustomer)
 router.get('/onecustomer',customerController.oneCustomer)
 router.get('/onecustomerdetail',customerController.joincustomerandproduct)
-
+// Product table
 router.get('/getProduct',productController.getproduct)
 router.post('/postProduct',productController.createproduct)
 router.delete('/deleteproduct',productController.deleteproduct)
