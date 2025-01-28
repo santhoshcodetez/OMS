@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-// Get all customers
+
 const getCustomer = async (req, res) => {
     try {
         const getCustomers = await customer.findAll();
@@ -23,7 +23,7 @@ const register = async (req, res) => {
         const hashedpassword = await bcrypt.hash(password, 10)
 
         const newCustomer = await customer.create({ userName, password: hashedpassword, email })
-        const token = jwt.sign({ id: newCustomer.id, userName: newCustomer.userName }, process.env.JWT_SECRET, { expiresIn: "1h" })
+        const token = jwt.sign({ id: newCustomer.id, userName: newCustomer.userName,email:newCustomer.email }, process.env.JWT_SECRET, { expiresIn: "1h" })
         res.status(201).json({ message: "User Registed Sucessfully", token })
     } catch (error) {
         console.log(error);
@@ -53,7 +53,7 @@ const Login = async (req, res) => {
 
  
         const token = jwt.sign(
-            { id: existCustomer.id, userName: existCustomer.userName },
+            { id: existCustomer.id, userName: existCustomer.userName,email:existCustomer.email },
             process.env.JWT_SECRET,
             { expiresIn: "1h" }
         );
