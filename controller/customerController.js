@@ -61,11 +61,7 @@ const Login = async (req, res) => {
         res.status(200).json({
             message: "Login successful",
             token,
-            user: {
-                id: existCustomer.id,
-                userName: existCustomer.userName,
-                email: existCustomer.email
-            }
+            user: {id: existCustomer.id,userName: existCustomer.userName,email: existCustomer.email}
         });
     } catch (error) {
         res.status(500).json({ message: "Error logging in", error: error.message });
@@ -75,8 +71,6 @@ const Login = async (req, res) => {
 const updateCustomer = async (req, res) => {
     try {
         const { id, ...updateData } = req.body;
-
-        // Check if customer exists
         const existingCustomer = await customer.findByPk(id);
         if (!existingCustomer) {
             return res.status(404).json({ message: "Customer not found" });
@@ -90,12 +84,12 @@ const updateCustomer = async (req, res) => {
     }
 };
 
-// Delete customer
+
 const deleteCustomer = async (req, res) => {
     try {
         const { id } = req.body;
 
-        // Check if customer exists
+
         const existingCustomer = await customer.findByPk(id);
         if (!existingCustomer) {
             return res.status(404).json({ message: "Customer not found" });
@@ -109,7 +103,7 @@ const deleteCustomer = async (req, res) => {
     }
 };
 
-// Get a single customer by ID
+
 const oneCustomer = async (req, res) => {
     try {
         const { id } = req.body;
@@ -126,7 +120,7 @@ const oneCustomer = async (req, res) => {
     }
 };
 
-// Get customer with their products (via orders and order details)
+
 const joincustomerandproduct = async (req, res) => {
     try {
         const { id } = req.body;
