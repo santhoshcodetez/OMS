@@ -4,28 +4,27 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class customer extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
     static associate(models) {
-      // Define the association between customer and order
-      customer.hasMany(models.order, {
-        foreignKey: 'customerId', // The key in the order table that references the customer
-        as: 'orderhere'           // Alias for the association (used in eager loading)
-      });
+      // define association here
     }
   }
-
-  customer.init({
-    id: {
-      primaryKey: true,
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
-    },
+  customer.init({      id: {
+    primaryKey: true,
+    type: DataTypes.UUID,
+    defaultValue:DataTypes.UUIDV4
+  },
     userName: DataTypes.STRING,
     password: DataTypes.STRING,
-    email: DataTypes.STRING
+    email: DataTypes.STRING,
+    token: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'customer',
   });
-
   return customer;
 };
